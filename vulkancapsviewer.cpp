@@ -484,6 +484,8 @@ void VulkanCapsViewer::slotComboTabChanged(int index)
     ui.tabWidgetDevice->setCurrentIndex(index);
 }
 
+
+
 bool VulkanCapsViewer::initVulkan()
 {
     VkResult vkRes;

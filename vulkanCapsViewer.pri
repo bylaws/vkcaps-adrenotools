@@ -3,7 +3,11 @@
 # ------------------------------------------------------
 HEADERS += ./settings.h \
     $$PWD/VulkanDeviceInfoExtensions.h \
+    $$PWD/android_linker_ns.h \
     $$PWD/appleutils.mm \
+    $$PWD/driver.h \
+    $$PWD/elf_soname_patcher.h \
+    $$PWD/priv.h \
     ./treeproxyfilter.h \
     ./vulkanLayerInfo.hpp \
     ./vulkancapsviewer.h \
@@ -17,6 +21,9 @@ HEADERS += ./settings.h \
     $$PWD/vulkanDeviceInfo.h
 SOURCES += ./main.cpp \
     $$PWD/VulkanDeviceInfoExtensions.cpp \
+    $$PWD/android_linker_ns.cpp \
+    $$PWD/driver.cpp \
+    $$PWD/elf_soname_patcher.cpp \
     ./settings.cpp \
     ./settingsDialog.cpp \
     ./submitDialog.cpp \

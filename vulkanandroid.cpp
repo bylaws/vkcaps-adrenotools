@@ -3,7 +3,7 @@
 #ifdef ANDROID
     #include <android/log.h>
     #include <dlfcn.h>
-
+ #include "driver.h"
 PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr;
 PFN_vkCreateInstance vkCreateInstance;
 PFN_vkDestroyInstance vkDestroyInstance;
@@ -32,11 +32,15 @@ bool loadVulkanLibrary()
     __android_log_print(ANDROID_LOG_INFO, "vulkanCapsViewer", "Loading libvulkan.so...\n");
 
     // Load vulkan library
-    void *libVulkan = dlopen("libvulkan.so", RTLD_NOW | RTLD_LOCAL);
+    void *libVulkan = adrenotools_open_libvulkan(RTLD_NOW | RTLD_LOCAL, ADRENOTOOLS_DRIVER_CUSTOM, nullptr, "/data/data/de.saschawillems.vulkancapsviewer/files/", "/data/data/de.saschawillems.vulkancapsviewer/files/", "libvulkan_freedreno.so", nullptr);
     if (!libVulkan)
     {
-        __android_log_print(ANDROID_LOG_INFO, "vulkanCapsViewer", "Could not load vulkan library : %s!\n", dlerror());
-        return false;
+        libVulkan = adrenotools_open_libvulkan(RTLD_NOW | RTLD_LOCAL, ADRENOTOOLS_DRIVER_FILE_REDIRECT, nullptr, "/data/data/de.saschawillems.vulkancapsviewer/files/", nullptr, nullptr, "/data/data/de.saschawillems.vulkancapsviewer/files/");
+
+        if (!libVulkan) {
+            __android_log_print(ANDROID_LOG_INFO, "vulkanCapsViewer", "Could not load vulkan library : %s!\n", dlerror());
+            return false;
+        }
     }
 
     // Load base function pointers
